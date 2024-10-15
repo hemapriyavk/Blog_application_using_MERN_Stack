@@ -103,6 +103,23 @@ border: none;
 }
 
 /* Blog Details */
+.blog-details-container {
+  position: relative;
+}
+
+.home-button {
+  position: absolute;
+  top: 20px; 
+  right: 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
 .blog-details {
   background-color: white;
   padding: 2rem;
@@ -132,7 +149,7 @@ border: none;
 }
 
 .blog-details-button {
-  margin-top: 2rem;
+  margin: 1rem;
   background-color: #FF4C4C;
   color: white;
   border: none;

@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 function CreateBlog() {
   const [title, setTitle] = useState('');
@@ -31,7 +33,7 @@ function CreateBlog() {
         </div>
         <div className="mb-3">
           <label>Description</label>
-          <textarea className="form-control" value={description} onChange={(e) => setDescription(e.target.value)} required />
+          <ReactQuill theme="snow" value={description} onChange={setDescription} required />
         </div>
         <div className="mb-3">
           <label>Author</label>

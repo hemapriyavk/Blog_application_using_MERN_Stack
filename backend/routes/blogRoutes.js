@@ -26,7 +26,6 @@ router.get("/blog/:id", async (req,res)=>{
     try{
         const id = req.params.id;
         const response = await Blog.findById(id);
-        console.log(response);
         res.send(response);
     }catch(err){
         console.log(err);
@@ -39,7 +38,6 @@ router.post("/create-blog", async (req,res)=>{
         const data = req.body;
         const blog = new Blog(data);
         const response = await blog.save();
-        console.log(response);
         res.status(201).send(response);
     }catch(err){
         console.log(err);
@@ -52,7 +50,6 @@ router.put("/blog/:id", async (req,res)=>{
         const id = req.params.id;
         const data = req.body;
         const response = await Blog.findByIdAndUpdate(id,data,{returnOriginal:false});
-        console.log(response);
         res.send(response);
     }catch(err){
         console.log(err);
@@ -64,7 +61,6 @@ router.delete("/blog/:id", async (req,res)=>{
     try{
         const id = req.params.id;
         const response = await Blog.findByIdAndDelete(id);
-        console.log(response);
         res.send("Success!");
     }catch(err){
         console.log(err);

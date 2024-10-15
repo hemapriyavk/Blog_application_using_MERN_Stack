@@ -53,7 +53,7 @@ function Landing() {
         </InputGroup>
     </Container>
     <Container>
-        <h1 className='text-center m'>Latest Blogs</h1>
+        <h1 className='text-center m-5'>Latest Blogs</h1>
         <Row xs={1} md={3} className="g-4">
             {blogs.map((item, key) => (
                 <Col key={key}>

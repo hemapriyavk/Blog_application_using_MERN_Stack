@@ -22,11 +22,14 @@ function BlogDetails() {
     }, [id]);
 
     return (
-        <div>
+        <div className='blog-details-container'>
+            <Button className='home-button' onClick={() => navigate('/')}>
+                Home
+            </Button>
             {blog ? (
                 <div className='blog-details'>
                     <h1>{blog.title}</h1>
-                    <p>{blog.description}</p>
+                    <div dangerouslySetInnerHTML={{ __html: blog.description }} />
                     <small>{blog.author}</small>
                     <Button className='blog-details-button' onClick={async () => {
                         try {
@@ -36,6 +39,9 @@ function BlogDetails() {
                             console.error("Error deleting blog:", error);
                         }
                     }}>Delete Blog</Button>
+                    <Button className='blog-details-button' onClick={() => {
+                        navigate(`/edit-blog/${id}`);
+                    }}>Edit Blog</Button>
                 </div>
             ) : (
                 <p>Blog Not Found</p>
