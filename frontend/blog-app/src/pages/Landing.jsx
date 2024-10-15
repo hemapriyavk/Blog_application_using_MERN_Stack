@@ -19,7 +19,7 @@ function Landing() {
 
     const fetchBlogs = useCallback(async() => {
         try{
-            const response = await axios.get('http://localhost:5000/get-all-blogs', {
+            const response = await axios.get('https://hp-blogs-backend.vercel.app/get-all-blogs', {
                 params: {search: searchTerm, page, limit: 10}
             });
             setBlogs(response.data.blogs);
