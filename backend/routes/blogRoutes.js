@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Blog = require('../models/blog.model');
+const Blog = require('../models/blog.model.js');
 
 router.get("/get-all-blogs", async (req, res) => {
     const { page = 1, limit = 10, search, category } = req.query;
