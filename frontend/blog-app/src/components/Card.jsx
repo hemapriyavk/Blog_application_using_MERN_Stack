@@ -5,18 +5,12 @@ import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom'; 
 
 function getPreviewText(htmlString, wordLimit) {
-  // Create a temporary DOM element to use its text content stripping
   const tempDiv = document.createElement('div');
   tempDiv.innerHTML = htmlString;
-  const plainText = tempDiv.textContent || tempDiv.innerText || '';  // Get clean text
-
-  // Split the text into an array of words
+  const plainText = tempDiv.textContent || tempDiv.innerText || ''; 
   const words = plainText.split(' ');
-
-  // Slice to the word limit and join back into a string
   const preview = words.slice(0, wordLimit).join(' ');
-
-  return preview + (words.length > wordLimit ? '...' : '');  // Add ellipsis if truncated
+  return preview + (words.length > wordLimit ? '...' : '');
 }
 
 function Cards({_id, src, title, description, category}) {

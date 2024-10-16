@@ -26,6 +26,7 @@ router.get("/blog/:id", async (req,res)=>{
     try{
         const id = req.params.id;
         const response = await Blog.findById(id);
+        console.log(response);
         res.send(response);
     }catch(err){
         console.log(err);

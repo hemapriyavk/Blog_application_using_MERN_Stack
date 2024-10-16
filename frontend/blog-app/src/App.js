@@ -13,7 +13,6 @@ function App() {
         <Route path="/blog/:id" element={<BlogDetails />} />
         <Route path="/create-blog" element={<CreateBlog />} />
         <Route path="/edit-blog/:id" element={<EditBlog />} />
-
       </Routes>
     </Router>
   );
