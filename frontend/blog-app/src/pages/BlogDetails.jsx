@@ -8,19 +8,33 @@ function BlogDetails() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [blog, setBlog] = useState(null);
+    const [loading, setLoading] = useState(true); 
+    const [error, setError] = useState(null);
 
     useEffect(() => {
-        async function fetchBlog() {
+        const fetchBlog = async () => {
             try {
+                setLoading(true);
                 const response = await axios.get(`${process.env.REACT_APP_API_URL}/blog/${id}`);
                 setBlog(response.data);
             } catch (error) {
+                setError("Blog not found");
                 console.error("Error fetching blog:", error);
+            } finally{
+                setLoading(false);
             }
-        }
+        };
         fetchBlog();
     }, [id]);
 
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>{error}</div>;
+    }
+    
     return (
         <div className='blog-details-container'>
             <Button className='home-button' onClick={() => navigate('/')}>
