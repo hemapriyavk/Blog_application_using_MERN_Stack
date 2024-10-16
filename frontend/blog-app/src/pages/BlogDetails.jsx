@@ -12,7 +12,7 @@ function BlogDetails() {
     useEffect(() => {
         async function fetchBlog() {
             try {
-                const response = await axios.get(`http://localhost:5000/blog/${id}`);
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/blog/${id}`);
                 setBlog(response.data);
             } catch (error) {
                 console.error("Error fetching blog:", error);
@@ -33,7 +33,7 @@ function BlogDetails() {
                     <small>{blog.author}</small>
                     <Button className='blog-details-button' onClick={async () => {
                         try {
-                            await axios.delete(`http://localhost:5000/blog/${id}`);
+                            await axios.delete(`${process.env.REACT_APP_API_URL}/blog/${id}`);
                             navigate('/');
                         } catch (error) {
                             console.error("Error deleting blog:", error);

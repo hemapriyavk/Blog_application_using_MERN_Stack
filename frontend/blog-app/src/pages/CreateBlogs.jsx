@@ -16,7 +16,7 @@ function CreateBlog() {
     e.preventDefault();
     try {
       const newBlog = { title, description, author, category, src };
-      await axios.post('http://localhost:5000/create-blog', newBlog);
+      await axios.post(`${process.env.REACT_APP_API_URL}/create-blog`, newBlog);
       navigate('/'); 
     } catch (error) {
       console.error('Error creating blog:', error);

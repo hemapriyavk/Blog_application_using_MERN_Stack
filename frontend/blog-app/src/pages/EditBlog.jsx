@@ -20,7 +20,7 @@ function EditBlog() {
   useEffect(() => {
     async function fetchBlog() {
       try {
-        const response = await axios.get(`http://localhost:5000/blog/${id}`);
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/blog/${id}`);
         setBlog(response.data);
       } catch (error) {
         console.error('Error fetching blog:', error);
@@ -33,7 +33,7 @@ function EditBlog() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:5000/blog/${id}`, blog);
+      await axios.put(`${process.env.REACT_APP_API_URL}/blog/${id}`, blog);
       navigate(`/blog/${id}`);
     } catch (error) {
       console.error('Error updating blog:', error);
