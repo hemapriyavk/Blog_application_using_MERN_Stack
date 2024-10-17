@@ -1,50 +1,56 @@
-// EditBlog.jsx
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
 function EditBlog() {
-  const { id } = useParams();
-  const [blog, setBlog] = useState({
-    title: '',
-    description: '',
-    author: '',
-    category: '',
-    src: ''
-  });
+  const { id } = useParams(); // Get blog ID from URL
   const navigate = useNavigate();
+  
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [author, setAuthor] = useState('');
+  const [category, setCategory] = useState('');
+  const [src, setSrc] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Fetch blog data by ID
   useEffect(() => {
-    async function fetchBlog() {
+    const fetchBlog = async () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/blog/${id}`);
-        setBlog(response.data);
+        const { title, description, author, category, src } = response.data;
+        setTitle(title);
+        setDescription(description);
+        setAuthor(author);
+        setCategory(category);
+        setSrc(src);
+        setLoading(false);
       } catch (error) {
-        console.error('Error fetching blog:', error);
+        setError('Failed to fetch blog');
+        console.error(error);
+        setLoading(false);
       }
-    }
+    };
+
     fetchBlog();
   }, [id]);
 
-  // Handle form submit for blog update
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`${process.env.REACT_APP_API_URL}/blog/${id}`, blog);
-      navigate(`/blog/${id}`);
+      const updatedBlog = { title, description, author, category, src };
+      await axios.put(`${process.env.REACT_APP_API_URL}/blog/${id}`, updatedBlog);
+      navigate(`/blog/${id}`); // Redirect back to the blog details page
     } catch (error) {
       console.error('Error updating blog:', error);
     }
   };
 
-  // Handle input changes
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setBlog({ ...blog, [name]: value });
-  };
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div className="container form-container">
@@ -52,55 +58,28 @@ function EditBlog() {
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label>Title</label>
-          <input
-            type="text"
-            className="form-control"
-            name="title"
-            value={blog.title}
-            onChange={handleChange}
-            required
-          />
+          <input 
+          type="text" 
+          className="form-control" 
+          value={title} 
+          onChange={(e) => setTitle(e.target.value)} 
+          required />
         </div>
         <div className="mb-3">
           <label>Description</label>
-          <ReactQuill
-          theme="snow"
-          value={blog.description || ''}
-          onChange={(value) => setBlog({ ...blog, description: value })}
-        />
+          <ReactQuill theme="snow" value={description} onChange={setDescription} required />
         </div>
         <div className="mb-3">
           <label>Author</label>
-          <input
-            type="text"
-            className="form-control"
-            name="author"
-            value={blog.author}
-            onChange={handleChange}
-            required
-          />
+          <input type="text" className="form-control" value={author} onChange={(e) => setAuthor(e.target.value)} required />
         </div>
         <div className="mb-3">
           <label>Category</label>
-          <input
-            type="text"
-            className="form-control"
-            name="category"
-            value={blog.category}
-            onChange={handleChange}
-            required
-          />
+          <input type="text" className="form-control" value={category} onChange={(e) => setCategory(e.target.value)} required />
         </div>
         <div className="mb-3">
           <label>Image URL</label>
-          <input
-            type="text"
-            className="form-control"
-            name="src"
-            value={blog.src}
-            onChange={handleChange}
-            required
-          />
+          <input type="text" className="form-control" value={src} onChange={(e) => setSrc(e.target.value)} required />
         </div>
         <button type="submit" className="btn btn-primary">Update Blog</button>
       </form>
